@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block header_title %}Domain Management{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+    <h2 class="text-lg font-semibold text-gray-800 mb-4">Add New Domain</h2>
+    <form hx-post="/domains" hx-target="#domain-list" hx-indicator="#spinner" class="flex gap-4">
+        <input type="text" id="domain-input" name="url" placeholder="example.com or https://example.com" required 
+            class="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition flex items-center gap-2">
+            <i class="fa-solid fa-plus"></i> Add Domain
+        </button>
+        <i id="spinner" class="fa-solid fa-circle-notch fa-spin text-indigo-600 text-2xl htmx-indicator self-center"></i>
+    </form>
+    
+    <!-- Suggested domains for Demo -->
+    <div class="mt-4 text-sm text-gray-500 flex items-center gap-3">
+        <span class="font-medium text-gray-600"><i class="fa-solid fa-lightbulb text-amber-500 mr-1"></i> Demo Suggestions:</span>
+        <button type="button" onclick="document.getElementById('domain-input').value='https://quotes.toscrape.com'" class="bg-gray-100 hover:bg-indigo-50 text-indigo-700 border border-gray-200 hover:border-indigo-200 px-3 py-1 rounded-full transition shadow-sm">
+            quotes.toscrape.com
+        </button>
+        <button type="button" onclick="document.getElementById('domain-input').value='https://books.toscrape.com'" class="bg-gray-100 hover:bg-indigo-50 text-indigo-700 border border-gray-200 hover:border-indigo-200 px-3 py-1 rounded-full transition shadow-sm">
+            books.toscrape.com
+        </button>
+        <button type="button" onclick="document.getElementById('domain-input').value='https://example.com'" class="bg-gray-100 hover:bg-indigo-50 text-indigo-700 border border-gray-200 hover:border-indigo-200 px-3 py-1 rounded-full transition shadow-sm">
+            example.com
+        </button>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+    <table class="w-full text-left border-collapse">
+        <thead>
+            <tr class="bg-gray-50 border-b border-gray-100 text-gray-500 text-sm">
+                <th class="p-4 font-medium">ID</th>
+                <th class="p-4 font-medium">Domain URL</th>
+                <th class="p-4 font-medium">Status</th>
+                <th class="p-4 font-medium">Added At</th>
+                <th class="p-4 font-medium text-right">Actions</th>
+            </tr>
+        </thead>
+        <tbody id="domain-list">
+            {% include "partials/domain_list.html" %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
